@@ -92,8 +92,13 @@ router.get('/daily', protect, authorize('teacher'), async (req, res) => {
   try {
     const { date = new Date().toISOString().split('T')[0] } = req.query;
     
+    console.log('Fetching daily attendance:', { date, teacherId: req.user._id });
+    
     const attendance = await Attendance.getDailyAttendance(date, req.user._id);
     const stats = await Attendance.getAttendanceStats(req.user._id, date);
+
+    console.log('Attendance found:', attendance.length, 'records');
+    console.log('Stats:', stats);
 
     // Convert stats to object
     const statsObj = {};
@@ -116,9 +121,10 @@ router.get('/daily', protect, authorize('teacher'), async (req, res) => {
     });
   } catch (error) {
     console.error('Get daily attendance error:', error);
+    console.error('Error stack:', error.stack);
     res.status(500).json({
       error: 'Server error',
-      message: 'An error occurred while fetching daily attendance'
+      message: error.message || 'An error occurred while fetching daily attendance'
     });
   }
 });

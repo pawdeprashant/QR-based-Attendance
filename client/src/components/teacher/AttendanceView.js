@@ -17,7 +17,16 @@ const AttendanceView = () => {
       setStats(response.data.data.stats);
     } catch (error) {
       console.error('Error fetching attendance:', error);
-      toast.error('Failed to fetch attendance data');
+      const errorMessage = error.response?.data?.message || error.message || 'Failed to fetch attendance data';
+      console.error('Error details:', {
+        status: error.response?.status,
+        data: error.response?.data,
+        message: errorMessage
+      });
+      toast.error(errorMessage);
+      // Set empty state on error to prevent UI issues
+      setAttendance([]);
+      setStats({ total: 0, present: 0, late: 0, absent: 0 });
     } finally {
       setLoading(false);
     }

@@ -1,5 +1,4 @@
 const express = require('express');
-const mongoose = require('mongoose');
 const cors = require('cors');
 const helmet = require('helmet');
 const rateLimit = require('express-rate-limit');
@@ -8,6 +7,9 @@ require('dotenv').config({ path: './config.env' });
 const authRoutes = require('./routes/auth');
 const qrRoutes = require('./routes/qr');
 const attendanceRoutes = require('./routes/attendance');
+const connectDB = require('./config/db');
+
+connectDB();
 
 const app = express();
 app.set('trust proxy', 1);
@@ -53,20 +55,6 @@ app.use((err, req, res, next) => {
 // 404 handler
 app.use('*', (req, res) => {
   res.status(404).json({ error: 'Route not found' });
-});
-
-// Database connection
-mongoose.connect(process.env.MONGODB_URI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-})
-.then(() => {
-  console.log('Connected to MongoDB');
-})
-.catch((err) => {
-  console.error('MongoDB connection error:', err);
-  console.log('Starting server without database connection...');
-  console.log('Please install and start MongoDB to use all features.');
 });
 
 const PORT = process.env.PORT || 5000;

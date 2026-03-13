@@ -76,9 +76,12 @@ attendanceSchema.statics.getDailyAttendance = function(date, teacherId) {
   const endOfDay = new Date(date);
   endOfDay.setHours(23, 59, 59, 999);
   
+  // Convert teacherId to ObjectId if it's a string
+  const teacherObjectId = typeof teacherId === 'string' ? new mongoose.Types.ObjectId(teacherId) : teacherId;
+  
   return this.find({
     date: { $gte: startOfDay, $lte: endOfDay },
-    teacher: teacherId,
+    teacher: teacherObjectId,
     isDeleted: false
   }).populate('student', 'name studentId department year')
     .populate('qrCode', 'code generatedAt expiresAt')

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-import { FaQrcode, FaUsers, FaChartBar, FaCalendarAlt } from 'react-icons/fa';
+import { FaQrcode, FaUsers, FaCalendarAlt, FaUserGraduate } from 'react-icons/fa';
 
 const DashboardHome = () => {
   const [stats, setStats] = useState({
@@ -126,12 +126,12 @@ const DashboardHome = () => {
                   </Link>
                 </div>
                 <div className="col-md-3 mb-3">
-                  <Link to="/teacher/attendance" className="text-decoration-none">
+                  <Link to="/teacher/students" className="text-decoration-none">
                     <div className="card text-center h-100">
                       <div className="card-body">
-                        <FaChartBar className="text-warning mb-3" size={40} />
-                        <h6 className="card-title">Analytics</h6>
-                        <p className="card-text text-muted">View attendance statistics</p>
+                        <FaUserGraduate className="text-warning mb-3" size={40} />
+                        <h6 className="card-title">Registered Students</h6>
+                        <p className="card-text text-muted">View all registered students</p>
                       </div>
                     </div>
                   </Link>
@@ -155,7 +155,7 @@ const DashboardHome = () => {
 
       {/* Recent Activity */}
       <div className="row">
-        <div className="col-12">
+        <div className="col-12 mb-4">
           <div className="card">
             <div className="card-body">
               <h5 className="card-title mb-3">Recent Activity</h5>
