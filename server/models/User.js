@@ -41,7 +41,7 @@ const userSchema = new mongoose.Schema({
     type: Number,
     required: function() { return this.role === 'student'; },
     min: [1, 'Year must be at least 1'],
-    max: [5, 'Year cannot exceed 5']
+    max: [2, 'Year cannot exceed 2']
   },
   isActive: {
     type: Boolean,
